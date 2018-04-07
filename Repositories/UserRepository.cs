@@ -1,10 +1,10 @@
 using System;
 using System.Data;
-using API_Users.Models;
+using beekeepr.Models;
 using Dapper;
 using MySql.Data.MySqlClient;
 
-namespace API_Users.Repositories
+namespace beekeepr.Repositories
 {
     public class UserRepository : DbContext
     {
@@ -15,21 +15,39 @@ namespace API_Users.Repositories
         public UserReturnModel Register(RegisterUserModel creds)
         {
             // encrypt the password??
-            creds.Password = BCrypt.Net.BCrypt.HashPassword(creds.Password);
             //sql
             try
             {
-                int id = _db.ExecuteScalar<int>(@"
-                INSERT INTO users (Username, Email, Password)
-                VALUES (@Username, @Email, @Password);
-                SELECT LAST_INSERT_ID();
-            ", creds);
-
-                return new UserReturnModel()
+                Guid g = Guid.NewGuid();
+                string id = g.ToString();
+                User user = new User()
                 {
                     Id = id,
                     Username = creds.Username,
-                    Email = creds.Email
+                    Email = creds.Email,
+                    Password = BCrypt.Net.BCrypt.HashPassword(creds.Password)
+                };
+                var success = _db.Execute(@"
+                INSERT INTO users(
+                    id,
+                    username,
+                    email,
+                    password
+                ) VALUES (
+                    @Id,
+                    @Username,
+                    @Email,
+                    @Password
+                )", user);
+                if (success < 1)
+                {
+                    throw new Exception("EMAIL IN USE");
+                }
+                return new UserReturnModel()
+                {
+                    Id = id,
+                    Username = user.Username,
+                    Email = user.Email
                 };
             }
             catch (MySqlException e)
@@ -47,7 +65,7 @@ namespace API_Users.Repositories
             ", creds);
             if (user != null)
             {
-                var valid = BCrypt.Net.BCrypt.Verify(creds.Password, user.Password);
+                Boolean valid = BCrypt.Net.BCrypt.Verify(creds.Password, user.Password);
                 if (valid)
                 {
                     return user.GetReturnModel();

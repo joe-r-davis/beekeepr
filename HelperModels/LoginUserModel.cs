@@ -1,4 +1,4 @@
-namespace API_Users.Models
+namespace beekeepr.Models
 {
     public class LoginUserModel
     {

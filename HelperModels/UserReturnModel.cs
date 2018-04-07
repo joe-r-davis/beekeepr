@@ -2,11 +2,11 @@ using System;
 using System.Collections.Generic;
 using System.Security.Claims;
 
-namespace API_Users.Models
+namespace beekeepr.Models
 {
     public class UserReturnModel
     {
-        public int Id { get; set; }
+        public string Id { get; set; }
         public string Username { get; set; }
         public string Email { get; set; }
 
@@ -14,7 +14,7 @@ namespace API_Users.Models
         {
             var claims = new List<Claim> {
                         new Claim(ClaimTypes.Email, Email),
-                        new Claim(ClaimTypes.Name, Id.ToString())
+                        new Claim(ClaimTypes.Name, Id)
                     };
             var userIdentity = new ClaimsIdentity(claims, "login");
             ClaimsPrincipal principal = new ClaimsPrincipal(userIdentity);
