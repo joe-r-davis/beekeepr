@@ -1,39 +1,42 @@
 <template>
   <div class="home">
-    <h1>This is going to be the Home vue! </h1>
-    <h3>{{user.name}}</h3>
-        <h3>{{user.email}}</h3>
-    <button class="btn btn-secondary my-2 my-sm-0" @click="logout">Logout</button>
+    <navbar></navbar>
+    <div class="container-fluid">
+      
+    </div>
   </div>
 </template>
 
 <script>
-export default {
-  name: "Home",
-  data() {
-    return {};
-  },
-  components: {},
-  computed: {
-    isHomeRoute() {
-      return this.$route.path === "/Home" || this.$route.path === "/home";
+  import navbar from './Navbar'
+  export default {
+    name: "Home",
+    data() {
+      return {};
     },
-    user() {
-      return this.$store.state.user;
-    }
-  },
-  methods: {
-    logout() {
-      this.$store.dispatch("logoutUser");
-      this.$router.push({ path: "/welcome" });
+    components: {
+      navbar,
     },
-    userProfile() {
-      this.$router.push({ path: "/UserProfile" });
+    computed: {
+      // isHomeRoute() {
+      //   return this.$route.path === "/Home" || this.$route.path === "/home";
+      // },
+      // user() {
+      //   return this.$store.state.user;
+      // }
+    },
+    methods: {
+      // userProfile() {
+      //   this.$router.push({ path: "/UserProfile" });
+      // }
     }
-  }
-};
+  };
 </script>
 
 <style scoped>
-
+  div {
+    outline-color: turquoise;
+    outline-style: solid;
+    outline-width: 1px;
+  }
 </style>

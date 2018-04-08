@@ -1,140 +1,76 @@
-// Vuex 'store': Sets and maintains front-end application 'state'
+import vue from 'vue'
+import vuex from 'vuex'
+import axios from 'axios'
+import router from '../router'
 
-import vue from "vue";
-import vuex from "vuex";
-import axios from "axios";
-import router from "../router";
+var production = !window.location.host.includes('localhost')
+var baseUrl = production ? '//something.herokuapp.com/' : '//localhost:5000/'
 
-var baseUrl = "//localhost:5000/";
-
-var api = axios.create({
-  baseURL: baseUrl + "api/",
-  timeout: 3000,
-  withCredentials: true
-});
+var ourAPI = axios.create({
+    baseURL: baseUrl + 'api/',
+    timeout: 5000,
+    withCredentials: true
+})
 
 var auth = axios.create({
-  baseURL: baseUrl + "Account/",
-  timeout: 3000,
-  withCredentials: true
-});
+    baseURL: baseUrl + 'account/',
+    timeout: 5000,
+    withCredentials: true
+})
 
-vue.use(vuex);
+vue.use(vuex)
 
 export default new vuex.Store({
-  state: {
-    user: {},
-    authError: {
-      error: false,
-      message: ""
-    }
-  },
+    state: {
+        user: {}
+    },
     mutations: {
-      setUser(state, user) {
-        state.user = user;
-      },
-      setAuthError(state, error) {
-        state.authError = {
-          error: error.error,
-          message: error.message
-        };
-      }
+        setUser(state, payload) {
+            state.user = payload;
+        }
     },
     actions: {
-      // Auth
-      registerUser({ commit, dispatch }, user) {
-        debugger
-        console.log("user here?")
-        auth
-          .post("register", user)
-          .then(res => {
-            var newUser = res.data;
-            commit("setUser", newUser);
-            commit("setAuthError", { error: false, message: "" });
-            router.push({
-              name: "Home"
-            });
-          })
-          .catch(err => {
-            console.log(err);
-            commit("setAuthError", {
-              error: true,
-              message:
-                "Register failed: Invalid username, email, or password given"
-            });
-          });
-      },
-
-      editUser({ commit, dispatch }, user) {
-        api
-          .put("users/" + user._id, user)
-          .then(res => {
-            var updatedUser = res.data;
-            commit("setUser", updatedUser);
-          })
-          .catch(err => {
-            console.log(err);
-          });
-      },
-
-      loginUser({ commit, dispatch }, user) {
-        auth
-          .post("login", user)
-          .then(res => {
-            var newUser = res.data;
-            console.log("logged-in user:", newUser);
-            commit("setUser", newUser);
-            commit("setAuthError", { error: false, message: "" });
-            router.push({
-              name: "Home"
-            });
-          })
-          .catch(err => {
-            console.log(err);
-            commit("setAuthError", {
-              error: true,
-              message: "Log-in failed: Invalid username or password"
-            });
-          });
-      },
-
-      authenticateUser({ commit, dispatch }) {
-        auth
-          .get("authenticate")
-          .then(res => {
-            var sessionUser = res.data;
-            console.log("returning user:", sessionUser);
-            commit("setUser", sessionUser);
-          })
-          .catch(err => {
-            console.error(err);
-          });
-      },
-
-      logoutUser({ commit, dispatch }) {
-        auth
-          .delete("logout")
-          .then(() => {
-            console.log("User logged out");
-            commit("setUser", {});
-            commit("setAuthError", { error: false, message: "" });
-            router.push({
-              name: "Welcome"
-            });
-          })
-          .catch(err => {
-            console.log(err);
-          });
-      },
-      getUserById({ commit, dispatch }, user) {
-        api
-          .get("users/" + user._id, user)
-          .then(res => {
-            var foundUser = res.data;
-          })
-          .catch(err => {
-            console.log(err);
-          });
-      },
+        login({ commit, dispatch }, payload) {
+            auth.post('login', payload)
+                .then(res => {
+                    commit('setUser', res.data)
+                })
+                .catch(err => {
+                    console.error(err)
+                })
+        },
+        register({ commit, dispatch }, payload) {
+            auth.post('register', payload)
+                .then(res => {
+                    commit('setUser', res.data)
+                })
+                .catch(err => {
+                    console.error(err)
+                })
+        },
+        authenticate({ commit, dispatch }, payload) {
+            auth.get('authenticate', payload)
+                .then(res => {
+                    commit('setUser', res.data)
+                    if (res.data == ""){
+                        router.push({ name: "Login" })
+                    } else {
+                        router.push({ name: "Home" })
+                    }
+                })
+                .catch(err => {
+                    console.error(err)
+                })
+        },
+        logout({ commit, dispatch }, payload) {
+            auth.delete('logout')
+                .then(res => {
+                    commit('setUser', {})
+                    router.push({name: "Login"})
+                })
+                .catch(err => {
+                    console.error(err)
+                })
+        }
     }
-});
+})
