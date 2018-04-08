@@ -1,7 +1,7 @@
 <template>
   <div class="navbar-wrapper">
     <nav class="navbar navbar-expand-md navbar-custom">
-        <!-- @click="home" -->
+      <!-- @click="home" -->
       <a class="navbar-brand">
         <img src="../assets/beekeepr-nav-logo.png" class="nav-logo" alt="beekeepr">
       </a>
@@ -23,7 +23,7 @@
         <div class="nav-buttons-wrapper my-2 my-lg-0 ml-auto">
           <button class="btn btn-success signInButton" data-toggle="modal" data-target="#loginModal">Login</button>
           <button class="btn btn-primary registerButton" data-toggle="modal" data-target="#registerModal">Register</button>
-          <!-- <button class="btn btn-secondary my-2 my-sm-0" @click="logout">Logout</button> -->
+          <button class="btn btn-secondary my-2 my-sm-0" @click="logout">Logout</button>
           <div class="modal fade" id="loginModal" tabindex="-1" role="dialog">
             <div class="modal-dialog modal-dialog-centered" role="document">
               <div class="modal-content">
@@ -91,6 +91,9 @@
       },
       register() {
         this.$store.dispatch('register', this.newUser)
+      },
+      logout() {
+        this.$store.dispatch('logout')
       }
     }
   }
@@ -139,7 +142,7 @@
     border-color: rgba(0, 77, 57, 1.0);
   }
 
-    .registerButton {
+  .registerButton {
     background-color: rgba(149, 121, 92, 1.0);
     border-color: rgba(123, 101, 75, 1.0);
     transition: all;
