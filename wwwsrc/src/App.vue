@@ -1,17 +1,20 @@
 <template>
   <div id="app">
-    <img src="./assets/logo.png">
+    <img class="welcome-image" src="./assets/beekeepr-main-logo.png">
     <router-view/>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'app'
+  name: 'App',
+  mounted() {
+    this.$store.dispatch('authenticateUser')
+  }
 }
 </script>
 
-<style>
+<style scoped>
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -19,5 +22,10 @@ export default {
   text-align: center;
   color: #2c3e50;
   margin-top: 60px;
+}
+.welcome-image{
+  width: 50%;
+  max-width: 500px;
+  height: 50%;
 }
 </style>

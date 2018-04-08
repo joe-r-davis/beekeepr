@@ -1,5 +1,5 @@
 -- CREATE TABLE users (
---     id int NOT NULL AUTO_INCREMENT,
+--     id VARCHAR(255) NOT NULL,
 --     username VARCHAR(20) NOT NULL,
 --     email VARCHAR(255) NOT NULL,
 --     password VARCHAR(255) NOT NULL,
@@ -8,10 +8,10 @@
 -- );
 
 -- CREATE TABLE vaults (
---     id int NOT NULL AUTO_INCREMENT,
+--     id VARCHAR(255) NOT NULL,
 --     name VARCHAR(20) NOT NULL,
 --     description VARCHAR(255) NOT NULL,
---     userId int,
+--     userId VARCHAR(255) NOT NULL,
 --     INDEX userId (userId),
 --     FOREIGN KEY (userId)
 --         REFERENCES users(id)
@@ -20,10 +20,10 @@
 -- );
 
 -- CREATE TABLE keeps (
---     id int NOT NULL AUTO_INCREMENT,
+--     id VARCHAR(255) NOT NULL,
 --     name VARCHAR(20) NOT NULL,
 --     description VARCHAR(255) NOT NULL,
---     userId int,
+--     userId VARCHAR(255),
 --     INDEX userId (userId),
 --     FOREIGN KEY (userId)
 --         REFERENCES users(id)
@@ -32,10 +32,10 @@
 -- );
 
 -- CREATE TABLE vaultkeeps (
---     id int NOT NULL AUTO_INCREMENT,
---     vaultId int NOT NULL,
---     keepId int NOT NULL,
---     userId int NOT NULL,
+--     id VARCHAR(255) NOT NULL,
+--     vaultId VARCHAR(255) NOT NULL,
+--     keepId VARCHAR(255) NOT NULL,
+--     userId VARCHAR(255) NOT NULL,
 
 --     PRIMARY KEY (id),
 --     INDEX (vaultId, keepId),
@@ -52,7 +52,7 @@
 --     FOREIGN KEY (keepId)
 --         REFERENCES keeps(id)
 --         ON DELETE CASCADE
--- )
+-- );
 
 -- SELECT * FROM vaultkeeps vk
 -- INNER JOIN keeps k ON k.id = vk.keepId 
@@ -62,3 +62,16 @@
 
 -- DELETE from vaults WHERE id = 2;
 -- DELETE FROM users WHERE id = 1;
+
+-- DROP TABLE users;
+-- SELECT * FROM users
+
+-- INSERT INTO users(
+-- username,
+-- email,
+-- password
+-- ) VALUES (
+-- "Joe2",
+-- "joe2@joe.com",
+-- "pass"
+-- );
