@@ -1,7 +1,8 @@
 <template>
   <div class="navbar-wrapper">
     <nav class="navbar navbar-expand-md navbar-custom">
-      <a class="navbar-brand" @click="home">
+        <!-- @click="home" -->
+      <a class="navbar-brand">
         <img src="../assets/beekeepr-nav-logo.png" class="nav-logo" alt="beekeepr">
       </a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCustom">
@@ -9,7 +10,7 @@
       </button>
       <div class="navbar-collapse collapse mx-2" id="navbarCustom">
         <ul class="navbar-nav">
-          <li class="nav-item">
+          <!-- <li class="nav-item">
             <a class="nav-link" @click="home">Keeps</a>
           </li>
           <li class="nav-item">
@@ -17,12 +18,12 @@
           </li>
           <li class="nav-item">
             <a class="nav-link" @click="home">My Profile</a>
-          </li>
+          </li> -->
         </ul>
         <div class="nav-buttons-wrapper my-2 my-lg-0 ml-auto">
           <button class="btn btn-success signInButton" data-toggle="modal" data-target="#loginModal">Login</button>
           <button class="btn btn-primary registerButton" data-toggle="modal" data-target="#registerModal">Register</button>
-          <button class="btn btn-secondary my-2 my-sm-0" @click="logout">Logout</button>
+          <!-- <button class="btn btn-secondary my-2 my-sm-0" @click="logout">Logout</button> -->
           <div class="modal fade" id="loginModal" tabindex="-1" role="dialog">
             <div class="modal-dialog modal-dialog-centered" role="document">
               <div class="modal-content">
