@@ -10,7 +10,7 @@
       <div class="navbar-collapse collapse mx-2" id="navbarCustom">
         <ul class="navbar-nav">
           <li class="nav-item">
-            <a class="nav-link" @click="myBeeswax">My Beeswax</a>
+            <a class="nav-link" @click="myBeeswax">{{user.username}}</a>
           </li>
         </ul>
         <div class="nav-buttons-wrapper my-2 my-lg-0 ml-auto">
