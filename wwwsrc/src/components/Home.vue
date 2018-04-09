@@ -31,9 +31,9 @@
 </script>
 
 <style scoped>
-  div {
+  /* div {
     outline-color: turquoise;
     outline-style: solid;
     outline-width: 1px;
-  }
+  } */
 </style>

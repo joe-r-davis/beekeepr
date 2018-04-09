@@ -27,10 +27,12 @@
                 </div>
                 <div class="modal-body">
                   <form @submit.prevent="login">
-                    <input type="email" placeholder="email" v-model="loginUser.email">
-                    <input type="password" placeholder="password" v-model="loginUser.password">
-                    <button type="submit" class="btn btn-success signInButton">Login</button>
-                    <button class="btn btn-warning mleft" type="reset">Reset</button>
+                    <input class="mx-2" type="email" placeholder="email" v-model="loginUser.email">
+                    <input class="mx-2" type="password" placeholder="password" v-model="loginUser.password">
+                    <div class="auth-modal">
+                      <button type="submit" class="btn btn-success signInButton mx-2">Login</button>
+                      <button class="btn btn-warning mx-2" type="reset">Reset</button>
+                    </div>
                   </form>
                 </div>
               </div>
@@ -45,7 +47,7 @@
                     <span aria-hidden="true">&times;</span>
                   </button>
                 </div>
-                <div class="modal-body">
+                <div class="modal-body auth-modal">
                   <form @submit.prevent="register">
                     <input type="text" placeholder="username" v-model="newUser.username">
                     <input type="email" placeholder="email" v-model="newUser.email">
@@ -120,11 +122,11 @@
 </script>
 
 <style scoped>
-  div {
+  /* div {
     outline-color: red;
     outline-style: solid;
     outline-width: 1px;
-  }
+  } */
 
   .nav-logo {
     height: 80px;
@@ -139,13 +141,16 @@
     background-color: rgba(201, 218, 208, 1.0)
   }
 
+  .auth-modal {
+    padding: 1rem;
+  }
+
   .signInButton {
     background-color: rgba(0, 102, 78, 1.0);
     border-color: rgba(0, 88, 66, 1.0);
     transition: all;
     transition-duration: 400ms;
     color: rgba(251, 251, 251, 1.0);
-    margin: .5rem;
   }
 
   .signInButton:hover {
