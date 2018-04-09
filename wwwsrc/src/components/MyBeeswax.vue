@@ -1,16 +1,20 @@
 <template>
-  <div class="home">
-    <navbar></navbar>
-    <div class="container-fluid">
-      
-    </div>
-  </div>
+ 
+        <div class="my-beeswax">
+            <navbar></navbar>
+            <div class="container-fluid">
+                <h1>{{ user.username }} TEST</h1>
+            </div>
+        </div>
+        
+
+
 </template>
 
 <script>
   import navbar from './Navbar'
   export default {
-    name: "Home",
+    name: "MyBeeswax",
     data() {
       return {};
     },
@@ -23,9 +27,7 @@
       }
     },
     methods: {
-      userProfile() {
-        this.$router.push({ path: "/UserProfile" });
-      }
+
     }
   };
 </script>

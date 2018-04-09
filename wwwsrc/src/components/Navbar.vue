@@ -1,8 +1,7 @@
 <template>
   <div class="navbar-wrapper">
     <nav class="navbar navbar-expand-md navbar-custom">
-      <!-- @click="home" -->
-      <a class="navbar-brand">
+      <a class="navbar-brand" @click="home">
         <img src="../assets/beekeepr-nav-logo.png" class="nav-logo" alt="beekeepr">
       </a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCustom">
@@ -10,15 +9,9 @@
       </button>
       <div class="navbar-collapse collapse mx-2" id="navbarCustom">
         <ul class="navbar-nav">
-          <!-- <li class="nav-item">
-            <a class="nav-link" @click="home">Keeps</a>
-          </li>
           <li class="nav-item">
-            <a class="nav-link" @click="home">Vaults</a>
+            <a class="nav-link" @click="myBeeswax">My Beeswax</a>
           </li>
-          <li class="nav-item">
-            <a class="nav-link" @click="home">My Profile</a>
-          </li> -->
         </ul>
         <div class="nav-buttons-wrapper my-2 my-lg-0 ml-auto">
           <button class="btn btn-success signInButton" data-toggle="modal" data-target="#loginModal">Login</button>
@@ -28,7 +21,6 @@
             <div class="modal-dialog modal-dialog-centered" role="document">
               <div class="modal-content">
                 <div class="modal-header">
-                  <h5 class="modal-title" id="modalLabel">Login</h5>
                   <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                   </button>
@@ -38,6 +30,7 @@
                     <input type="email" placeholder="email" v-model="loginUser.email">
                     <input type="password" placeholder="password" v-model="loginUser.password">
                     <button type="submit" class="btn btn-success signInButton">Login</button>
+                    <button class="btn btn-warning mleft" type="reset">Reset</button>
                   </form>
                 </div>
               </div>
@@ -58,6 +51,7 @@
                     <input type="email" placeholder="email" v-model="newUser.email">
                     <input type="password" placeholder="password" v-model="newUser.password">
                     <button type="submit" class="btn btn-success registerButton">Register</button>
+                    <button class="btn btn-warning mleft" type="reset">Reset</button>
                   </form>
                 </div>
               </div>
@@ -85,16 +79,42 @@
         }
       }
     },
+    computed: {
+      isMyBeesWaxRoute() {
+        return this.$route.path === "/MyBeeswax" || this.$route.path === "/mybeeswax" || this.$route.path === "/myBeeswax";
+      },
+      isHomeRoute() {
+        return this.$route.path === "/Home" || this.$route.path === "/home"
+      },
+      user() {
+        return this.$store.state.user
+      },
+      imgUrl() {
+        var imgUrl = this.user.imgUrl
+        if (!imgUrl) {
+          imgUrl = "https://robohash.org/" + this.user.name + ".png"
+        }
+        return imgUrl
+      }
+    },
     methods: {
       login() {
         this.$store.dispatch('loginUser', this.loginUser)
+        $('#loginModal').modal('hide')
       },
       register() {
         this.$store.dispatch('registerUser', this.newUser)
+        $('#registerModal').modal('hide')
       },
       logout() {
         this.$store.dispatch('logoutUser')
-      }
+      },
+      home() {
+        this.$router.push({ path: '/home' })
+      },
+      myBeeswax() {
+        this.$router.push({ path: '/myBeeswax' })
+      },
     }
   }
 </script>

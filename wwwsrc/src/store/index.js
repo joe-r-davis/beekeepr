@@ -42,7 +42,9 @@ export default new vuex.Store({
         .then(res => {
           var newUser = res.data;
           commit("setUser", newUser);
-          commit("setAuthError", { error: false, message: "" });
+
+          // Ask Randy about this one
+          // commit("setAuthError", { error: false, message: "" });
 
           //Maybe here we commit "setActiveKeeps" and "setActiveVaults" OR even the "How this works route"
 
@@ -125,7 +127,7 @@ export default new vuex.Store({
           // commit("setAuthError", { error: false, message: "" });
 
           // maybe here we commit ("setActiveKeeps") and ("setActiveVaults") to empty
-          
+
           router.push({
             name: "Home"
           });
