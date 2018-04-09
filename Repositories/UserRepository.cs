@@ -26,7 +26,7 @@ namespace beekeepr.Repositories
       User user = new User()
       {
         Id = id,
-        Name = userData.Name,
+        Username = userData.Username,
         Email = userData.Email,
         Password = pass,// lets encrypt userData.Password
       };
@@ -35,12 +35,12 @@ namespace beekeepr.Repositories
       var success = _db.Execute(@"
         INSERT INTO users(
           id,
-          name, 
+          username, 
           email,
           password
         ) VALUES(
           @Id,
-          @Name,
+          @Username,
           @Email,
           @Password
         )
@@ -53,7 +53,7 @@ namespace beekeepr.Repositories
       return new UserReturnModel()
       {
         Id = user.Id,
-        Name = user.Name,
+        Username = user.Username,
         Email = user.Email
       };
     }
@@ -72,7 +72,7 @@ namespace beekeepr.Repositories
         return new UserReturnModel()
         {
           Id = user.Id,
-          Name = user.Name,
+          Username = user.Username,
           Email = user.Email
         };
       }
@@ -90,7 +90,7 @@ namespace beekeepr.Repositories
       return new UserReturnModel()
       {
         Id = user.Id,
-        Name = user.Name,
+        Username = user.Username,
         Email = user.Email
       };
     }
@@ -100,7 +100,7 @@ namespace beekeepr.Repositories
       var i = _db.Execute(@"
                 UPDATE users SET
                     email = @Email,
-                    name = @Name
+                    username = @Username
                 WHERE id = @Id
             ", userData);
       if (i > 0)

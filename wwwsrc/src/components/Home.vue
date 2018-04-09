@@ -18,17 +18,17 @@
       navbar,
     },
     computed: {
-      // isHomeRoute() {
-      //   return this.$route.path === "/Home" || this.$route.path === "/home";
-      // },
-      // user() {
-      //   return this.$store.state.user;
-      // }
+      isHomeRoute() {
+        return this.$route.path === "/Home" || this.$route.path === "/home";
+      },
+      user() {
+        return this.$store.state.user;
+      }
     },
     methods: {
-      // userProfile() {
-      //   this.$router.push({ path: "/UserProfile" });
-      // }
+      userProfile() {
+        this.$router.push({ path: "/UserProfile" });
+      }
     }
   };
 </script>

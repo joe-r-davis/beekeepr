@@ -87,13 +87,13 @@
     },
     methods: {
       login() {
-        this.$store.dispatch('login', this.loginUser)
+        this.$store.dispatch('loginUser', this.loginUser)
       },
       register() {
-        this.$store.dispatch('register', this.newUser)
+        this.$store.dispatch('registerUser', this.newUser)
       },
       logout() {
-        this.$store.dispatch('logout')
+        this.$store.dispatch('logoutUser')
       }
     }
   }

@@ -7,9 +7,9 @@
 <script>
 export default {
   name: 'App',
-  // mounted() {
-  //   this.$store.dispatch('authenticateUser')
-  // }
+  mounted() {
+    this.$store.dispatch('authenticateUser')
+  }
 }
 </script>
 
