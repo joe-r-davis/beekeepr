@@ -8,20 +8,8 @@
 -- );
 
 -- CREATE TABLE vaults (
---     id VARCHAR(255) NOT NULL,
---     name VARCHAR(20) NOT NULL,
---     description VARCHAR(255) NOT NULL,
---     userId VARCHAR(255) NOT NULL,
---     INDEX userId (userId),
---     FOREIGN KEY (userId)
---         REFERENCES users(id)
---         ON DELETE CASCADE,  
---     PRIMARY KEY (id)
--- );
-
--- CREATE TABLE keeps (
---     id VARCHAR(255) NOT NULL,
---     name VARCHAR(20) NOT NULL,
+--     id int NOT NULL AUTO_INCREMENT,
+--     name VARCHAR(30) NOT NULL,
 --     description VARCHAR(255) NOT NULL,
 --     userId VARCHAR(255),
 --     INDEX userId (userId),
@@ -31,10 +19,27 @@
 --     PRIMARY KEY (id)
 -- );
 
+-- CREATE TABLE keeps (
+--     id int NOT NULL AUTO_INCREMENT,
+--     title VARCHAR(20) NOT NULL,
+--     imageUrl VARCHAR(255) NOT NULL,
+--     articleUrl VARCHAR(255) NOT NULL,
+--     public TINYINT,
+--     keepCount INT,
+--     shareCount INT,
+--     viewCount INT,
+--     userId VARCHAR(255),
+--     INDEX userId (userId),
+--     FOREIGN KEY (userId)
+--       REFERENCES users(id)
+--       ON DELETE CASCADE,  
+--     PRIMARY KEY (id)
+-- );
+
 -- CREATE TABLE vaultkeeps (
---     id VARCHAR(255) NOT NULL,
---     vaultId VARCHAR(255) NOT NULL,
---     keepId VARCHAR(255) NOT NULL,
+--     id int NOT NULL AUTO_INCREMENT,
+--     vaultId int NOT NULL,
+--     keepId int NOT NULL,
 --     userId VARCHAR(255) NOT NULL,
 
 --     PRIMARY KEY (id),
@@ -52,26 +57,32 @@
 --     FOREIGN KEY (keepId)
 --         REFERENCES keeps(id)
 --         ON DELETE CASCADE
--- );
+-- )
 
+
+-- -- USE THIS LINE FOR GET KEEPS BY VAULTID
 -- SELECT * FROM vaultkeeps vk
 -- INNER JOIN keeps k ON k.id = vk.keepId 
 -- WHERE (vaultId = 2)
 
--- DELETE FROM keeps WHERE id = 1;
-
--- DELETE from vaults WHERE id = 2;
--- DELETE FROM users WHERE id = 1;
-
 -- DROP TABLE users;
--- SELECT * FROM users
 
--- INSERT INTO users(
--- username,
--- email,
--- password
+-- INSERT INTO keeps(
+-- title,
+-- imageUrl,
+-- articleUrl,
+-- public,
+-- keepCount,
+-- shareCount,
+-- viewCount,
+-- userId
 -- ) VALUES (
--- "Joe2",
--- "joe2@joe.com",
--- "pass"
+-- "Pinehurst Kids photo",
+-- "https://f4.bcbits.com/img/a3319694587_16.jpg",
+-- "https://pinehurstkids.bandcamp.com/",
+-- "1",
+-- "0",
+-- "0",
+-- "0",
+-- "d8ae9aef-6f3c-41f0-912d-58580501dd5c"
 -- );
