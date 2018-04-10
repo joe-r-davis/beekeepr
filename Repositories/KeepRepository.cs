@@ -21,14 +21,14 @@ namespace beekeepr.Repositories
         {
             int id = _db.ExecuteScalar<int>($@"
       INSERT INTO keeps (
-        title,
-        imageUrl,
-        articleUrl,
-        public,
-        keepCount,
-        shareCount,
-        viewCount,
-        userId
+            title,
+            imageUrl,
+            articleUrl,
+            public,
+            keepCount,
+            shareCount,
+            viewCount,
+            userId
       ) VALUES (@title, @imageUrl, @articleUrl, @public, @keepCount, @shareCount, @viewCount, @userId)", keep);
             keep.Id = id;
             return keep;
@@ -71,12 +71,16 @@ namespace beekeepr.Repositories
         {
             Keep updated = _db.QueryFirstOrDefault<Keep>(@"
             UPDATE keeps SET
-            name = @Name,
-            description = @Description,
-            price = @Price,
-            kcal = @KCal
+            title = @Title,
+            imageUrl = @ImageUrl,
+            articleUrl = @ArticleUrl,
+            public = @Public,
+            keepCount = @KeepCount,
+            shareCount = @ShareCount,
+            viewCount = @ViewCount,
+            userId = @UserId
             WHERE id = @id;
-            SELECT * FROM Burgers WHERE id = @id;", keep);
+            SELECT * FROM Keeps WHERE id = @id;", keep);
             return updated;
         }
 
