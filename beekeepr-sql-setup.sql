@@ -86,3 +86,23 @@
 -- "0",
 -- "d8ae9aef-6f3c-41f0-912d-58580501dd5c"
 -- );
+
+-- INSERT INTO vaults(
+-- name,
+-- description,
+-- userId
+-- ) VALUES (
+-- "Pinehurst Kids photos",
+-- "Band photos throughout the years",
+-- "d8ae9aef-6f3c-41f0-912d-58580501dd5c"
+-- );
+
+-- INSERT INTO vaults(
+-- name,
+-- description,
+-- userId
+-- ) VALUES (
+-- "Delete this Vault",
+-- "update me and then delete me",
+-- "d8ae9aef-6f3c-41f0-912d-58580501dd5c"
+-- );
