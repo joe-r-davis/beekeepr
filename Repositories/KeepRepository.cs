@@ -93,13 +93,11 @@ namespace beekeepr.Repositories
             return "successful deletion";
         }
 
-        public List<Keep> GetKeepsByUserId(string id)
-        // public IEnumerable<Keep> GetKeepsByUserId(string id)
+        public IEnumerable<Keep> GetKeepsByUserId(string userId)
         {
             return _db.Query<Keep>(@"
         SELECT * FROM keeps WHERE userId = @userId
-      ", new { userId = id}).ToList();
-    //   ", new { id = userId});
+      ", new { userId = userId});
         }
 
     }
