@@ -28,6 +28,14 @@ namespace beekeepr
             return _repo.GetById(id);
         }
 
+        [HttpGet("/userkeeps")]
+        public IEnumerable<Keep> GetUserKeeps()
+        {
+            var user = HttpContext.User;
+            var id = user.Identity.Name;
+            return _repo.GetKeepsByUserId(id);
+        }
+
         [HttpPost]
         public Keep AddKeep([FromBody]Keep keep)
         {

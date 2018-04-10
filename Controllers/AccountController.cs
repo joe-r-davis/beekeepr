@@ -102,6 +102,5 @@ namespace beekeepr.Controllers
       return _repo.GetUserById(id);
     }
 
-
   }
 }

@@ -49,7 +49,28 @@
                     <button class="btn btn-warning mleft" type="reset">Reset</button>
                     <p>This is a place where you can manage your individual keeps</p>
                   </form>
+                  <div class="card-column keep-card">
+                    <div class="card">
+                      <img class="card-img-top keep-image" src="https://media1.fdncms.com/portmerc/imager/u/original/7911529/music2-570x300.jpg"
+                        alt="keep image">
+                      <div class="card-body">
+                        <h5 class="card-title">Card title that wraps to a new line</h5>
+                        <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This
+                          content is a little bit longer.</p>
+                      </div>
+                    </div>
+                  </div>
+
+
+
+
+
+
+
                 </div>
+
+
+
                 <div class="tab-pane fade" id="vault" role="tabpanel" aria-labelledby="vault-tab">
                   <form class="keepr-add-form">
                     <div class="form-group">
@@ -94,11 +115,11 @@
 </script>
 
 <style scoped>
-  /* div {
+  div {
     outline-color: turquoise;
     outline-style: solid;
     outline-width: 1px;
-  } */
+  }
 
   .dashboard-intro {
     background-color: rgba(0, 102, 78, 1.0);
@@ -106,6 +127,15 @@
     margin-top: 2rem;
     padding: 1rem;
   }
+
+  .keep-image {
+    width: 300px;
+  }
+
+  .keep-card {
+    width: 300px;
+  }
+
 
   .keep-button {
     background-color: rgba(0, 102, 78, 1.0);

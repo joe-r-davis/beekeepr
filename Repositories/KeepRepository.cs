@@ -3,6 +3,7 @@ using System.Data;
 using beekeepr.Models;
 using Microsoft.AspNetCore.Mvc;
 using Dapper;
+using System.Linq;
 
 namespace beekeepr.Repositories
 {
@@ -47,25 +48,25 @@ namespace beekeepr.Repositories
             return _db.Query<Keep>("SELECT * FROM keeps");
         }
 
-    //     public IEnumerable<UserKeepList> GetUserKeepList(string userId)
-    //     {
+        //     public IEnumerable<UserKeepList> GetUserKeepList(string userId)
+        //     {
 
-    //         return _db.Query<UserKeepList>(@"
-    //     SELECT
-    //       u.name username,
-    //       u.email,
-    //       ob.burgerId,
-    //       ob.quantity,
-    //       ob.orderId,
-    //       b.name keep,
-    //       b.kcal
-    //     FROM keeplist kl
-    //     JOIN users u ON u.id = ob.userId
-    //     JOIN keeps k ON b.id = ob.keepId
-    //     WHERE userId = @id;
-    //   ", new { id = userId });
+        //         return _db.Query<UserKeepList>(@"
+        //     SELECT
+        //       u.name username,
+        //       u.email,
+        //       ob.burgerId,
+        //       ob.quantity,
+        //       ob.orderId,
+        //       b.name keep,
+        //       b.kcal
+        //     FROM keeplist kl
+        //     JOIN users u ON u.id = ob.userId
+        //     JOIN keeps k ON b.id = ob.keepId
+        //     WHERE userId = @id;
+        //   ", new { id = userId });
 
-    //     }
+        //     }
 
         public Keep Update(int id, Keep keep)
         {
@@ -90,6 +91,15 @@ namespace beekeepr.Repositories
         DELETE FROM keeps WHERE id = @id
       ", new { id = id });
             return "successful deletion";
+        }
+
+        public List<Keep> GetKeepsByUserId(string id)
+        // public IEnumerable<Keep> GetKeepsByUserId(string id)
+        {
+            return _db.Query<Keep>(@"
+        SELECT * FROM keeps WHERE userId = @userId
+      ", new { userId = id}).ToList();
+    //   ", new { id = userId});
         }
 
     }
