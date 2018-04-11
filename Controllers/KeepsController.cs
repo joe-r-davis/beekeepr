@@ -62,12 +62,6 @@ namespace beekeepr
             return _repo.FindByIdAndRemove(id);
         }
 
-        // [HttpGet("report/{userId}")]
-        // public IEnumerable<UserKeepOrderReport> GetReport(string userId)
-        // {
-        //     return _repo.GetUserKeepReport(userId);
-        // }
-
     }
 }
 

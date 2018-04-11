@@ -35,6 +35,9 @@ export default new vuex.Store({
       message: error.message
     };
   },
+  setUserKeeps(state, userAddedKeep) {
+    state.userKeeps = userAddedKeep;
+  },
   actions: {
     registerUser({ commit, dispatch }, user) {
       auth
@@ -42,12 +45,6 @@ export default new vuex.Store({
         .then(res => {
           var newUser = res.data;
           commit("setUser", newUser);
-
-          // Ask Randy about this one
-          // commit("setAuthError", { error: false, message: "" });
-
-          //Maybe here we commit "setActiveKeeps" and "setActiveVaults" OR even the "How this works route"
-
           router.push({
             name: "Home"
           });
@@ -138,6 +135,18 @@ export default new vuex.Store({
             error: true,
             message: "User must log in or register to post Keeps or add Vaults"
           });
+        });
+    },
+
+    addKeep({ commit, dispatch }, newKeep) {
+      api
+        .post("keeps/", newKeep)
+        .then(res => {
+          var addedKeep = res.data;
+          commit("setKeeps", addedKeep)
+        })
+        .catch(err => {
+          console.log(err);
         });
     }
   }

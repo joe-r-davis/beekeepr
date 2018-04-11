@@ -28,21 +28,18 @@
             <div class="card-body keepr-add-wrapper d-flex justify-content-center">
               <div class="tab-content" id="myTabContent">
                 <div class="tab-pane fade show active" id="keep" role="tabpanel" aria-labelledby="keep-tab">
-                  <form class="keepr-add-form">
+                  <form class="keepr-add-form" action="#" @addKeep.prevent="addKeep">
                     <div class="form-group">
-                      <input class="form-control" type="text" placeholder="Title">
+                      <input class="form-control" v-model="keep.title" type="text" placeholder="Title">
                     </div>
                     <div class="form-group">
-                      <input class="form-control" type="text" placeholder="Img Url">
+                      <input class="form-control" v-model="keep.imageUrl" type="text" placeholder="Img Url">
                     </div>
                     <div class="form-group">
-                      <input class="form-control" type="text" placeholder="Link to Article">
-                    </div>
-                    <div class="form-group">
-                      <input class="form-control" type="text" placeholder="Tags">
+                      <input class="form-control" v-model="keep.articleUrl" type="text" placeholder="Link to Article">
                     </div>
                     <div class="form-check">
-                      <input type="checkbox" class="form-check-input" id="exampleCheck1">
+                      <input type="checkbox" v-model="keep.public" class="form-check-input" id="exampleCheck1">
                       <label class="form-check-label" for="exampleCheck1">Mark as Public?</label>
                     </div>
                     <button type="submit" class="btn btn-success keepr-add-button">Keep</button>
@@ -98,7 +95,9 @@
   export default {
     name: "MyBeeswax",
     data() {
-      return {};
+      return {
+        keep: {}
+      };
     },
     components: {
       navbar,
@@ -109,7 +108,15 @@
       }
     },
     methods: {
-
+      addKeep() {
+        var newKeep = {
+        title: this.keep.title,
+        imageUrl: this.keep.imageUrl,
+        articleUrl: this.keep.articleUrl,
+        public: this.keep.public
+        }
+        this.$store.dispatch('addKeep', keep)
+      }
     }
   };
 </script>
