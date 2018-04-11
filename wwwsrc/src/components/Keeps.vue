@@ -83,18 +83,18 @@
         if (this.selectedVault === "") {
           return
         } else {
-          console.log('Im a user1', this.user.id)
+          console.log('this is the user', this.user.id)
           // var userId = this.user.id
-          console.log('Im a keep2', this.keep.id)
+          console.log('this is the keep', this.keep.id)
           // var keepId = (this.keep.id)
-          console.log('Im a vault3', this.selectedVault)
+          console.log('selecting a vault', this.selectedVault)
           // var vaultId = (this.selectedVault)
           var payload = {
             userId: this.user.id,
             keepId: this.keep.id,
             vaultId: this.selectedVault,
           }
-          console.log('Im a user4', payload)
+          console.log('adding to vault', payload)
           this.$store.dispatch('addToVault', payload)
         }
         this.selectedVault = ""
