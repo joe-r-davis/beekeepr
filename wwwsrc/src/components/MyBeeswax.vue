@@ -49,7 +49,7 @@
                   <div class="container-fluid">
                     <div class="row">
                       <div class="card-deck all-keeps-wrapper d-flex justify-content-center">
-                        <keeps :keep='myKeep' v-for='myKeep in myKeeps' :key='myKeep.id'></keeps>
+                        <myKeeps :keep='myKeep' v-for='myKeep in myKeeps' :key='myKeep.id'></myKeeps>
                       </div>
                     </div>
                   </div>
@@ -79,6 +79,7 @@
 <script>
   import navbar from './Navbar'
   import Keeps from './Keeps'
+  import MyKeeps from './MyKeeps'
   export default {
     name: "MyBeeswax",
     data() {
@@ -90,6 +91,7 @@
     components: {
       navbar,
       keeps: Keeps,
+      myKeeps: MyKeeps,
     },
     computed: {
       user() {

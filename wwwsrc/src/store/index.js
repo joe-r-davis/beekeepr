@@ -212,5 +212,12 @@ export default new vuex.Store({
         });
       });
     },
+    deleteKeep({ commit, dispatch}, keep) {
+      api.delete(`keeps/${keep.id}`, keep).then(res => {
+        dispatch("getAllMyKeeps").catch(err => {
+          console.log(err);
+        });
+      });
+    }
   }
 });
