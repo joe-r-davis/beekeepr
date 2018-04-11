@@ -135,7 +135,7 @@ export default new vuex.Store({
           // maybe here we commit ("setActiveKeeps") and ("setActiveVaults") to empty
 
           router.push({
-            name: "Home"
+            name: "Welcome"
           });
         })
         .catch(err => {
@@ -156,6 +156,34 @@ export default new vuex.Store({
             return keepB.createdAt - keepA.createdAt;
           });
           commit("setKeeps", allPublicKeeps);
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    },
+    updateShareCount({ commit, dispatch }, keep) {
+      debugger
+      // console.log('Shared Project Shared',payload)
+      keep.shareCount = keep.shareCount + 1;
+      // console.log('Shared Project Shared2',payload)
+      api
+        .put(`keeps/${keep.id}`, keep)
+        .then(() => {
+          dispatch("getAllPublicKeeps");
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    },
+    updateViewCount({ commit, dispatch }, keep) {
+      debugger
+      // console.log('Shared Project Shared',payload)
+      keep.viewCount = keep.viewCount + 1;
+      // console.log('Shared Project Shared2',payload)
+      api
+        .put(`keeps/${keep.id}`, keep)
+        .then(() => {
+          dispatch("getAllPublicKeeps");
         })
         .catch(err => {
           console.log(err);

@@ -5,14 +5,16 @@
             <div class="row align-items-center">
                 <div class="col-sm-12 d-flex justify-content-center">
                     <div class="beekeepr-welcome-logo">
-                        <img src="../assets/beekeepr-main-logo.png" alt="beekeepr" class="logo-img" width="200px">
+
+                        <img src="../assets/beekeepr-main-logo.png" alt="beekeepr" class="welcome-message" width="200px" @click="home">
                     </div>
                 </div>
                 <div class="col-sm-12 d-flex justify-content-center">
-                    <div class="welcome-to-beekeepr">
+                    <div class="welcome-to-beekeepr welcome-message" @click="home">
                         <h3>Welcome to Beekeepr!</h3>
                         <p>
-                            Feel free to look around! If you want to save or share your favorite photos or links ("keeps"), or build up collections of favorites ("vaults"), you'll need to login or register first. Have fun!
+                            Feel free to look around! If you want to save or share your favorite photos or links ("keeps"), or build up collections of
+                            favorites ("vaults"), you'll need to login or register first. Have fun!
                         </p>
                     </div>
                 </div>
@@ -37,6 +39,9 @@
             }
         },
         methods: {
+            home() {
+                this.$router.push({ path: '/home' })
+            },
         }
     };
 </script>
@@ -57,5 +62,9 @@
         width: 20rem;
         padding: 1.5rem;
         background-color: rgba(201, 218, 208, 1.0)
+    }
+
+    .welcome-message {
+        cursor: pointer;
     }
 </style>

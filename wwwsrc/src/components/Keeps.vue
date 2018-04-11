@@ -5,11 +5,11 @@
       <div class="card-body">
         <ul class="list-group list-group-flush">
           <li class="list-group-item text-center keep-details">
-            <span>K: {{keep.countKeep}} 0 </span>
+            <span>K: {{keep.keepCount}}</span>
             <span>
-              <i class="fas fa-share"></i>: {{keep.countShare}} 0</span>
+              <i class="fas fa-share"></i>: {{keep.shareCount}}</span>
             <span>
-              <i class="fas fa-eye"></i>: {{keep.countView}} 0 </span>
+              <i class="fas fa-eye"></i>: {{keep.viewCount}}</span>
           </li>
           <li class="list-group-item keep-details">{{keep.title}}</li>
           <li class="list-group-item keep-details">
@@ -19,7 +19,9 @@
                 <i class="fas fa-share"></i>
               </Button>
               <Button class="btn btn-secondary">
-                <i class="fas fa-eye"></i>
+                <a :href="keep.imageUrl" @click='updateViewCount' class="view-icon" target="_blank" title="keep.title">
+                  <i class="fas fa-eye view-icon"></i>
+                </a>
               </Button>
             </div>
           </li>
@@ -28,21 +30,23 @@
           <div class="col">
             <div v-if="shareBox" class="shareButton keep-details">
               <span>
-                <!-- <a :href='facebook' class="share-icon" @click='updateShareCount' target="_blank" title="Share on Facebook"> -->
-                <i class="fab fa-facebook"></i>
-                <!-- </a> -->
+                <a :href="'https://www.facebook.com/sharer/sharer.php?u=' + keep.articleUrl" @click='updateShareCount' class="share-icon"
+                  target="_blank" title="Share on Facebook">
+                  <i class="fab fa-facebook"></i>
+                </a>
               </span>
               <span>
-                <!-- <a class="share-icon" @click='updateShareCount' :href="twitter" target="_blank"> -->
-                <i class="fab fa-twitter"></i>
-                <!-- </a> -->
+                <a :href="'https://twitter.com/intent/tweet?url=' + keep.articleUrl + '&text=TEXT&via=YOURTWITTERACCOUNTNAME'" @click='updateShareCount'
+                  class="share-icon" target="_blank" title="Share on Twitter">
+                  <i class="fab fa-twitter"></i>
+                </a>
               </span>
             </div>
           </div>
         </div>
         <div class="col">
           <div v-if="keepToVault" @mouseleave="keepToVault = false" class="text-center keepButton mt-3">
-            <select v-model="selectedVault" @click="addToVault">
+            <select v-model="selectedVault" @click="addToVault" class="form-control form-control-sm">
               <option disabled value="">select vault</option>
               <option v-for="vault in vaults" :key="vault.id" :value="vault.id">{{vault.name}}</option>
             </select>
@@ -77,6 +81,12 @@
       removeKeep() {
         this.$store.dispatch('deleteKeep', this.keep)
       },
+      updateShareCount() {
+        this.$store.dispatch('updateShareCount', this.keep)
+      },
+      updateViewCount() {
+        this.$store.dispatch('updateViewCount', this.keep)
+      },
       addToVault() {
         console.log('Adding to vault', this.selectedVault)
 
@@ -110,16 +120,17 @@
     outline-width: 1px;
   } */
 
-.keeps-cards-wrapper {
-  margin-bottom: 1.5rem;
-}
+  .keeps-cards-wrapper {
+    margin-bottom: 1.5rem;
+  }
 
   .keep-card {
-    background-color: rgba(201, 218, 208, 1.0)
+    background-color: rgba(201, 218, 208, 1.0);
   }
 
   .keep-details {
-    background-color: rgba(252, 252, 252, 0.7)
+    background-color: rgba(252, 252, 252, 0.7);
+
   }
 
   .keep-button {
@@ -128,7 +139,6 @@
     transition: all;
     transition-duration: 400ms;
     color: rgba(251, 251, 251, 1.0);
-    margin: .5rem;
   }
 
   .keep-button:hover {
@@ -147,5 +157,53 @@
 
   .keepButtons {
     background: rgba(0, 0, 0, .6);
+  }
+
+  a.view-icon:link {
+    color: #FFF;
+    text-decoration: none;
+    font-weight: normal;
+  }
+
+  a.view-icon:visited {
+    color: #FFF;
+    text-decoration: none;
+    font-weight: normal;
+  }
+
+  a.view-icon:hover {
+    color: #FFF;
+    text-decoration: underline;
+    font-weight: normal;
+  }
+
+  a.view-icon:active {
+    color: #FFF;
+    text-decoration: none;
+    font-weight: normal;
+  }
+
+  a.share-icon:link {
+    color: rgba(0, 0, 0, .6);;
+    text-decoration: none;
+    font-weight: normal;
+  }
+
+  a.share-icon:visited {
+    color: rgba(0, 0, 0, .6);;
+    text-decoration: none;
+    font-weight: normal;
+  }
+
+  a.share-icon:hover {
+    color: rgba(0, 0, 0, .8);;
+    text-decoration: underline;
+    font-weight: normal;
+  }
+
+  a.share-icon:active {
+    color: rgba(0, 0, 0, .6);;
+    text-decoration: none;
+    font-weight: normal;
   }
 </style>
