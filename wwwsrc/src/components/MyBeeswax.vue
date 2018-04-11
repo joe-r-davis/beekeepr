@@ -28,9 +28,9 @@
             <div class="card-body keepr-add-wrapper d-flex justify-content-center">
               <div class="tab-content" id="myTabContent">
                 <div class="tab-pane fade show active" id="keep" role="tabpanel" aria-labelledby="keep-tab">
-                  <form class="keepr-add-form" action="#" @addKeep.prevent="addKeep">
+                  <form class="keepr-add-form">
                     <div class="form-group">
-                      <input class="form-control" v-model="keep.title" type="text" placeholder="Title">
+                      <input class="form-control" v-model="keep.title" type="text" placeholder="Title" maxlength="20">
                     </div>
                     <div class="form-group">
                       <input class="form-control" v-model="keep.imageUrl" type="text" placeholder="Img Url">
@@ -40,23 +40,13 @@
                     </div>
                     <div class="form-check">
                       <input type="checkbox" v-model="keep.public" class="form-check-input" id="exampleCheck1">
-                      <label class="form-check-label" for="exampleCheck1">Mark as Public?</label>
+                      <label class="form-check-label" for="exampleCheck1">Mark as Private?</label>
                     </div>
-                    <button type="submit" class="btn btn-success keepr-add-button">Keep</button>
+                    <button type="submit" class="btn btn-success keepr-add-button"  @click.prevent="addKeep">Keep</button>
                     <button class="btn btn-warning mleft" type="reset">Reset</button>
                     <p>This is a place where you can manage your individual keeps</p>
                   </form>
-                  <div class="card-column keep-card">
-                    <div class="card">
-                      <img class="card-img-top keep-image" src="https://media1.fdncms.com/portmerc/imager/u/original/7911529/music2-570x300.jpg"
-                        alt="keep image">
-                      <div class="card-body">
-                        <h5 class="card-title">Card title that wraps to a new line</h5>
-                        <p class="card-text">This is a longer card with supporting text below as a natural lead-in to additional content. This
-                          content is a little bit longer.</p>
-                      </div>
-                    </div>
-                  </div>
+
 
 
 
@@ -96,8 +86,8 @@
     name: "MyBeeswax",
     data() {
       return {
-        keep: {}
-      };
+        keep: {},
+      }
     },
     components: {
       navbar,
@@ -109,13 +99,13 @@
     },
     methods: {
       addKeep() {
-        var newKeep = {
+        this.newKeep = {
         title: this.keep.title,
         imageUrl: this.keep.imageUrl,
         articleUrl: this.keep.articleUrl,
-        public: this.keep.public
+        userId: this.$store.state.user.id
         }
-        this.$store.dispatch('addKeep', keep)
+        this.$store.dispatch('createKeep', this.newKeep)
       }
     }
   };

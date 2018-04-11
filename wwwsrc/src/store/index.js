@@ -6,15 +6,15 @@ import router from "../router";
 var production = !window.location.host.includes("localhost");
 var baseUrl = production ? "//something.herokuapp.com/" : "//localhost:5000/";
 
-var ourAPI = axios.create({
+var api = axios.create({
   baseURL: baseUrl + "api/",
-  timeout: 5000,
+  timeout: 3000,
   withCredentials: true
 });
 
 var auth = axios.create({
   baseURL: baseUrl + "account/",
-  timeout: 5000,
+  timeout: 3000,
   withCredentials: true
 });
 
@@ -22,21 +22,30 @@ vue.use(vuex);
 
 export default new vuex.Store({
   state: {
-    user: {}
+    user: {},
+    authError: {
+      error: false,
+      message: ""
+    },
+    allPublicKeeps: [],
+    userStatus: false
   },
   mutations: {
-    setUser(state, payload) {
-      state.user = payload;
-    }
-  },
-  setAuthError(state, error) {
-    state.authError = {
-      error: error.error,
-      message: error.message
-    };
-  },
-  setUserKeeps(state, userAddedKeep) {
-    state.userKeeps = userAddedKeep;
+    setUser(state, user) {
+      state.user = user;
+    },
+    setUserStatus(state, payload) {
+      state.userStatus = payload;
+    },
+    setAuthError(state, error) {
+      state.authError = {
+        error: error.error,
+        message: error.message
+      };
+    },
+    setKeeps(state, allPublicKeeps) {
+      state.allPublicKeeps = allPublicKeeps;
+    },
   },
   actions: {
     registerUser({ commit, dispatch }, user) {
@@ -137,17 +146,27 @@ export default new vuex.Store({
           });
         });
     },
-
-    addKeep({ commit, dispatch }, newKeep) {
+    getAllPublicKeeps({ commit, dispatch }) {
       api
-        .post("keeps/", newKeep)
+        .get("/Keeps")
         .then(res => {
-          var addedKeep = res.data;
-          commit("setKeeps", addedKeep)
+          console.log("Keeps", res.data);
+          var allPublicKeeps = res.data;
+          allPublicKeeps.sort((keepA, keepB) => {
+            return keepB.createdAt - keepA.createdAt;
+          });
+          commit("setKeeps", allPublicKeeps);
         })
         .catch(err => {
           console.log(err);
         });
-    }
+    },
+    createKeep({ commit, dispatch }, keep) {
+      api.post("/Keeps", keep).then(res => {
+        dispatch("getAllPublicKeeps").catch(err => {
+          console.log(err);
+        });
+      });
+    },
   }
 });
