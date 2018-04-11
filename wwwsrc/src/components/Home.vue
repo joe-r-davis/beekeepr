@@ -1,8 +1,8 @@
 <template>
   <div class="home">
     <navbar></navbar>
-    <div class="row">
-      <div class="container-fluid">
+    <div class="container-fluid">
+      <div class="row">
         <div class="card-deck all-keeps-wrapper d-flex justify-content-center">
           <keeps :keep='keep' v-for='keep in keeps' :key='keep.id'></keeps>
         </div>
@@ -59,6 +59,4 @@
     height: 100%;
     background-image: linear-gradient(-180deg, rgba(214, 206, 160, 1.0), rgba(123, 101, 75, 1.0));
   }
-
-  
 </style>

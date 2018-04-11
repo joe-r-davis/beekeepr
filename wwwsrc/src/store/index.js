@@ -46,6 +46,9 @@ export default new vuex.Store({
     setKeeps(state, allPublicKeeps) {
       state.allPublicKeeps = allPublicKeeps;
     },
+    setMyKeeps(state, allMyKeeps) {
+      state.allMyKeeps = allMyKeeps;
+    },
   },
   actions: {
     registerUser({ commit, dispatch }, user) {
@@ -148,7 +151,7 @@ export default new vuex.Store({
     },
     getAllPublicKeeps({ commit, dispatch }) {
       api
-        .get("/Keeps")
+        .get("/keeps")
         .then(res => {
           console.log("Keeps", res.data);
           var allPublicKeeps = res.data;
@@ -161,8 +164,22 @@ export default new vuex.Store({
           console.log(err);
         });
     },
+    getAllMyKeeps({ commit, dispatch }) {
+      api
+        .get("/keeps/userkeeps")
+        .then(res => {
+          console.log("MyKeeps", res.data);
+          var allMyKeeps = res.data;
+          allMyKeeps.sort((keepA, keepB) => {
+            return keepB.createdAt - keepA.createdAt;
+          });
+          commit("setMyKeeps", allMyKeeps);
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    },
     updateShareCount({ commit, dispatch }, keep) {
-      debugger
       // console.log('Shared Project Shared',payload)
       keep.shareCount = keep.shareCount + 1;
       // console.log('Shared Project Shared2',payload)
@@ -176,7 +193,6 @@ export default new vuex.Store({
         });
     },
     updateViewCount({ commit, dispatch }, keep) {
-      debugger
       // console.log('Shared Project Shared',payload)
       keep.viewCount = keep.viewCount + 1;
       // console.log('Shared Project Shared2',payload)

@@ -32,6 +32,8 @@
                     <div class="auth-modal">
                       <button type="submit" class="btn btn-success signInButton mx-2">Login</button>
                       <button class="btn btn-warning mx-2" type="reset">Reset</button>
+                      <hr>
+                      <p>Click on username once logged in to access dashboard</p>
                     </div>
                   </form>
                 </div>
@@ -54,6 +56,8 @@
                     <input type="password" placeholder="password" v-model="newUser.password">
                     <button type="submit" class="btn btn-success registerButton">Register</button>
                     <button class="btn btn-warning mleft" type="reset">Reset</button>
+                    <hr>
+                    <p>Click on username once logged in to access dashboard</p>
                   </form>
                 </div>
               </div>
@@ -62,6 +66,8 @@
         </div>
       </div>
     </nav>
+    <div class="row">
+    </div>
   </div>
 </template>
 
@@ -128,6 +134,10 @@
     outline-width: 1px;
   } */
 
+  .navbar-wrapper {
+    margin-left: 0px;
+    margin-right: 0px;
+  }
   .nav-logo {
     height: 80px;
     cursor: pointer;

@@ -42,22 +42,18 @@
                       <input type="checkbox" v-model="keep.public" class="form-check-input" id="exampleCheck1">
                       <label class="form-check-label" for="exampleCheck1">Mark as Private?</label>
                     </div>
-                    <button type="submit" class="btn btn-success keepr-add-button"  @click.prevent="addKeep">Keep</button>
+                    <button type="submit" class="btn btn-success keepr-add-button" @click.prevent="addKeep">Keep</button>
                     <button class="btn btn-warning mleft" type="reset">Reset</button>
                     <p>This is a place where you can manage your individual keeps</p>
                   </form>
-
-
-
-
-
-
-
-
+                  <div class="container-fluid">
+                    <div class="row">
+                      <div class="card-deck all-keeps-wrapper d-flex justify-content-center">
+                        <keeps :keep='myKeep' v-for='myKeep in myKeeps' :key='myKeep.id'></keeps>
+                      </div>
+                    </div>
+                  </div>
                 </div>
-
-
-
                 <div class="tab-pane fade" id="vault" role="tabpanel" aria-labelledby="vault-tab">
                   <form class="keepr-add-form">
                     <div class="form-group">
@@ -82,28 +78,43 @@
 
 <script>
   import navbar from './Navbar'
+  import Keeps from './Keeps'
   export default {
     name: "MyBeeswax",
     data() {
       return {
         keep: {},
+        myKeep: {},
       }
     },
     components: {
       navbar,
+      keeps: Keeps,
     },
     computed: {
       user() {
         return this.$store.state.user;
+      },
+      keeps() {
+        return this.$store.state.allPublicKeeps;
+        console.log(this.$store.state.allPublicKeeps)
+      },
+      myKeeps() {
+        return this.$store.state.allMyKeeps;
+        console.log(this.$store.state.allMyKeeps)
       }
+    },
+    mounted() {
+      this.$store.dispatch("getAllMyKeeps")
+      this.$store.dispatch("getAllPublicKeeps")
     },
     methods: {
       addKeep() {
         this.newKeep = {
-        title: this.keep.title,
-        imageUrl: this.keep.imageUrl,
-        articleUrl: this.keep.articleUrl,
-        userId: this.$store.state.user.id
+          title: this.keep.title,
+          imageUrl: this.keep.imageUrl,
+          articleUrl: this.keep.articleUrl,
+          userId: this.$store.state.user.id
         }
         this.$store.dispatch('createKeep', this.newKeep)
       }
@@ -112,11 +123,11 @@
 </script>
 
 <style scoped>
-  div {
+  /* div {
     outline-color: turquoise;
     outline-style: solid;
     outline-width: 1px;
-  }
+  } */
 
   .dashboard-intro {
     background-color: rgba(0, 102, 78, 1.0);

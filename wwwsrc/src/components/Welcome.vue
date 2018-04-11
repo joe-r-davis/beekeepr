@@ -13,8 +13,8 @@
                     <div class="welcome-to-beekeepr welcome-message" @click="home">
                         <h3>Welcome to Beekeepr!</h3>
                         <p>
-                            Feel free to look around! If you want to save or share your favorite photos or links ("keeps"), or build up collections of
-                            favorites ("vaults"), you'll need to login or register first. Have fun!
+                            Feel free to look around! If you want to save your favorite photos or links ("keeps"), or build up collections of
+                            favorites ("vaults"), you'll need to login or register first. Once logged in, just click on your name to access your dashboard. Have fun!
                         </p>
                     </div>
                 </div>
