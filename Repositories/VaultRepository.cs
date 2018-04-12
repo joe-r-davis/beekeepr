@@ -62,5 +62,12 @@ namespace beekeepr.Repositories
             return "successful deletion";
         }
 
+        public IEnumerable<Vault> GetVaultsByUserId(string userId)
+        {
+            return _db.Query<Vault>(@"
+        SELECT * FROM vaults WHERE userId = @userId
+      ", new { userId = userId });
+        }
+
     }
 }

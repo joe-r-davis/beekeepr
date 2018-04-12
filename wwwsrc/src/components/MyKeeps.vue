@@ -84,7 +84,6 @@
         props: ['keep', 'user'],
         methods: {
             removeKeep() {
-
                 this.$store.dispatch('deleteKeep', this.keep)
             },
             updateShareCount() {

@@ -28,6 +28,14 @@ namespace beekeepr
             return _repo.GetById(id);
         }
 
+        [HttpGet("uservaults")]
+        public IEnumerable<Vault> GetUserVaults()
+        {
+            var user = HttpContext.User;
+            var id = user.Identity.Name;
+            return _repo.GetVaultsByUserId(id);
+        }        
+
         [HttpPost]
         public Vault AddVault([FromBody]Vault vault)
         {

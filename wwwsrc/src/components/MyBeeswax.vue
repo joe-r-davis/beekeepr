@@ -57,15 +57,22 @@
                 <div class="tab-pane fade" id="vault" role="tabpanel" aria-labelledby="vault-tab">
                   <form class="keepr-add-form">
                     <div class="form-group">
-                      <input class="form-control" type="text" placeholder="Title">
+                      <input class="form-control" v-model="vault.name" type="text" placeholder="Vault Name" maxlength="30">
                     </div>
                     <div class="form-group">
-                      <input class="form-control" type="text" placeholder="Description">
+                      <input class="form-control" v-model="vault.description" type="text" placeholder="Description">
                     </div>
-                    <button type="submit" class="btn btn-success vault-button">Add Vault</button>
+                    <button type="submit" class="btn btn-success vault-button" @click.prevent="addVault">Add Vault</button>
                     <button class="btn btn-warning mleft" type="reset">Reset</button>
                     <p>Here you can manage your vaults and browse their contents</p>
                   </form>
+                  <div class="container-fluid">
+                      <div class="row">
+                        <div class="card-deck all-keeps-wrapper d-flex justify-content-center">
+                          <vaults :vault='vault' v-for='vault in vaults' :key='vault.id'></vaults>
+                        </div>
+                      </div>
+                    </div>
                 </div>
               </div>
             </div>
@@ -80,18 +87,21 @@
   import navbar from './Navbar'
   import Keeps from './Keeps'
   import MyKeeps from './MyKeeps'
+  import Vaults from './Vaults'
   export default {
     name: "MyBeeswax",
     data() {
       return {
         keep: {},
         myKeep: {},
+        vault: {},
       }
     },
     components: {
       navbar,
       keeps: Keeps,
       myKeeps: MyKeeps,
+      vaults: Vaults,
     },
     computed: {
       user() {
@@ -104,12 +114,18 @@
       myKeeps() {
         return this.$store.state.allMyKeeps;
         console.log(this.$store.state.allMyKeeps)
+      },
+      vaults() {
+        return this.$store.state.myVaults;
+        console.log(this.$store.state.myVaults)
       }
     },
     mounted() {
       this.$store.dispatch("getAllMyKeeps")
       this.$store.dispatch("getAllPublicKeeps")
+      this.$store.dispatch("getMyVaults")
     },
+    
     methods: {
       addKeep() {
         this.newKeep = {
@@ -119,6 +135,15 @@
           userId: this.$store.state.user.id
         }
         this.$store.dispatch('createKeep', this.newKeep)
+      },
+      addVault() {
+        debugger
+        this.newVault = {
+          name: this.vault.name,
+          description: this.vault.description,
+          userId: this.$store.state.user.id
+        }
+        this.$store.dispatch('createVault', this.newVault)
       }
     }
   };

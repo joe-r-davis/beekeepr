@@ -28,6 +28,7 @@ export default new vuex.Store({
       message: ""
     },
     allPublicKeeps: [],
+    myVaults: [],
     userStatus: false
   },
   mutations: {
@@ -48,6 +49,9 @@ export default new vuex.Store({
     },
     setMyKeeps(state, allMyKeeps) {
       state.allMyKeeps = allMyKeeps;
+    },
+    setMyVaults(state, myVaults) {
+      state.myVaults = myVaults;
     },
   },
   actions: {
@@ -179,6 +183,22 @@ export default new vuex.Store({
           console.log(err);
         });
     },
+    getMyVaults({ commit, dispatch }) {
+      api
+        .get("/vaults/uservaults")
+        .then(res => {
+          console.log("MyVaults", res.data);
+          var myVaults = res.data;
+          myVaults.sort((vaultA, vaultB) => {
+            return vaultB.createdAt - vaultA.createdAt;
+          });
+          commit("setMyVaults", myVaults);
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    },
+
     updateShareCount({ commit, dispatch }, keep) {
       // console.log('Shared Project Shared',payload)
       keep.shareCount = keep.shareCount + 1;
@@ -218,6 +238,13 @@ export default new vuex.Store({
           console.log(err);
         });
       });
-    }
+    },
+    createVault({ commit, dispatch }, vault) {
+      api.post("/vaults", vault).then(res => {
+        dispatch("getMyVaults").catch(err => {
+          console.log(err);
+        });
+      });
+    },
   }
 });

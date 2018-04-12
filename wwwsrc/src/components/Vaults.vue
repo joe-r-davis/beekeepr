@@ -1,56 +1,29 @@
 <template>
         <div class="vaults-cards-wrapper d-flex justify-content-center">
-          <div class="card vault-card" @mouseenter="vaultButtons = true" @mouseleave="vaultButtons = false" style="width: 18rem;">
-            <img class="card-img-top" :src="imgLink" alt="Card image cap">
+          <div class="card vault-card" style="width: 18rem;">
+            <div class="card-body">
+              <h5 class="card-title">{{vault.name}}</h5>
+            </div>
             <div class="card-body">
               <ul class="list-group list-group-flush">
-                <li class="list-group-item text-center vault-details">
-                  <span>K: {{vault.vaultCount}}</span>
-                  <span>
-                    <i class="fas fa-share"></i>: {{vault.shareCount}}</span>
-                  <span>
-                    <i class="fas fa-eye"></i>: {{vault.viewCount}}</span>
-                </li>
-                <li class="list-group-item vault-details">{{vault.title}}</li>
+                <li class="list-group-item vault-details">{{vault.description}}</li>
                 <li class="list-group-item vault-details">
-                  <div v-if="vaultButtons = vaultButtons ? true: false" class="text-center">
-                    <Button class="btn vault-button" @click="vaultToVault = vaultToVault ? false : true">K</Button>
-                    <Button class="btn btn-dark" @click="shareBox = shareBox ? false : true">
-                      <i class="fas fa-share"></i>
-                    </Button>
-                    <Button class="btn btn-secondary">
-                      <a :href="vault.imageUrl" @click='updateViewCount' class="view-icon" target="_blank" title="vault.title">
-                        <i class="fas fa-eye view-icon"></i>
-                      </a>
-                    </Button>
-                  </div>
+                    <Button class="btn btn-danger">
+                        <a @click='removeVault' class="view-icon">
+                            <i class="far fa-trash-alt view-icon"></i>
+                        </a>
+                    </Button>  
                 </li>
               </ul>
               <div class="row">
-                <div class="col">
-                  <div v-if="shareBox" class="shareButton vault-details">
-                    <span>
-                      <a :href="'https://www.facebook.com/sharer/sharer.php?u=' + vault.articleUrl" @click='updateShareCount' class="share-icon"
-                        target="_blank" title="Share on Facebook">
-                        <i class="fab fa-facebook"></i>
-                      </a>
-                    </span>
-                    <span>
-                      <a :href="'https://twitter.com/intent/tweet?url=' + vault.articleUrl + '&text=TEXT&via=YOURTWITTERACCOUNTNAME'" @click='updateShareCount'
-                        class="share-icon" target="_blank" title="Share on Twitter">
-                        <i class="fab fa-twitter"></i>
-                      </a>
-                    </span>
-                  </div>
-                </div>
               </div>
               <div class="col">
-                <div v-if="vaultToVault" @mouseleave="vaultToVault = false" class="text-center vaultButton mt-3">
+                <!-- <div v-if="vaultToVault" @mouseleave="vaultToVault = false" class="text-center vaultButton mt-3">
                   <select v-model="selectedVault" @click="addToVault" class="form-control form-control-sm">
                     <option disabled value="">select vault</option>
                     <option v-for="vault in vaults" :key="vault.id" :value="vault.id">{{vault.name}}</option>
                   </select>
-                </div>
+                </div> -->
               </div>
             </div>
           </div>
@@ -62,30 +35,18 @@
           name: 'Vaults',
           data() {
             return {
-              shareBox: false,
-              vaultButtons: false,
-              vaultToVault: false,
               selectedVault: "",
             }
           },
           computed: {
-            imgLink() {
-              return this.vault.imageUrl
-            },
             vaults() {
-              return this.$store.state.allUserVaults
+              return this.$store.state.myVaults
             },
           },
           props: ['vault', 'user'],
           methods: {
             removeVault() {
               this.$store.dispatch('deleteVault', this.vault)
-            },
-            updateShareCount() {
-              this.$store.dispatch('updateShareCount', this.vault)
-            },
-            updateViewCount() {
-              this.$store.dispatch('updateViewCount', this.vault)
             },
             addToVault() {
               console.log('Adding to vault', this.selectedVault)
