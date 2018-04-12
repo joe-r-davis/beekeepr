@@ -52,7 +52,7 @@ export default new vuex.Store({
     },
     setMyVaults(state, myVaults) {
       state.myVaults = myVaults;
-    },
+    }
   },
   actions: {
     registerUser({ commit, dispatch }, user) {
@@ -232,7 +232,7 @@ export default new vuex.Store({
         });
       });
     },
-    deleteKeep({ commit, dispatch}, keep) {
+    deleteKeep({ commit, dispatch }, keep) {
       api.delete(`keeps/${keep.id}`, keep).then(res => {
         dispatch("getAllMyKeeps").catch(err => {
           console.log(err);
@@ -246,5 +246,12 @@ export default new vuex.Store({
         });
       });
     },
+    deleteVault({ commit, dispatch }, vault) {
+      api.delete(`vaults/${vault.id}`, vault).then(res => {
+        dispatch("getMyVaults").catch(err => {
+          console.log(err);
+        });
+      });
+    }
   }
 });
