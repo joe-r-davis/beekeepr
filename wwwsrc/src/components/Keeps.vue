@@ -48,7 +48,7 @@
           <div v-if="keepToVault" @mouseleave="keepToVault = false" class="text-center keepButton mt-3">
             <select v-model="selectedVault" @click="addKeepToVault" class="form-control form-control-sm">
               <option disabled value="">select vault</option>
-              <option :vault="myVault" v-for="vault in vaults" :key="vault.id" :value="vault.id">{{vault.name}}</option>
+              <option :vault="vault" v-for="vault in vaults" :key="vault.id" :value="vault.id">{{vault.name}}</option>
             </select>
           </div>
         </div>
@@ -96,23 +96,21 @@
         if (this.selectedVault === "") {
           return
         } else {
-          console.log('User id is: ', this.keep.user.id)
-
-          console.log('Keep id is: ', this.keep.id)
-
-          console.log('Vault id is: ', this.selectedVault)
-
+          console.log('this is the user', this.user.id)
+          // var userId = this.user.id
+          console.log('this is the keep', this.keep.id)
+          // var keepId = (this.keep.id)
+          console.log('selecting a vault', this.selectedVault)
+          // var vaultId = (this.selectedVault)
           var payload = {
             userId: this.user.id,
             keepId: this.keep.id,
             vaultId: this.selectedVault,
           }
-          console.log('Adding keep to vault', payload)
-          this.$store.dispatch('addKeepToVault', payload)
-          console.log('updateKeepCount', newKeep)
-          this.$store.dispatch('updateKeepCount', newKeep)
-          this.selectedVault = ""
+          console.log('adding to vault', payload)
+          this.$store.dispatch('addToVault', payload)
         }
+        this.selectedVault = ""
       }
     }
   }
@@ -189,25 +187,29 @@
   }
 
   a.share-icon:link {
-    color: rgba(0, 0, 0, .6);;
+    color: rgba(0, 0, 0, .6);
+    ;
     text-decoration: none;
     font-weight: normal;
   }
 
   a.share-icon:visited {
-    color: rgba(0, 0, 0, .6);;
+    color: rgba(0, 0, 0, .6);
+    ;
     text-decoration: none;
     font-weight: normal;
   }
 
   a.share-icon:hover {
-    color: rgba(0, 0, 0, .8);;
+    color: rgba(0, 0, 0, .8);
+    ;
     text-decoration: underline;
     font-weight: normal;
   }
 
   a.share-icon:active {
-    color: rgba(0, 0, 0, .6);;
+    color: rgba(0, 0, 0, .6);
+    ;
     text-decoration: none;
     font-weight: normal;
   }

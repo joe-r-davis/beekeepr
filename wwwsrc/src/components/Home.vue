@@ -31,10 +31,20 @@
       keeps() {
         return this.$store.state.allPublicKeeps;
         console.log(this.$store.state.allPublicKeeps)
+      },
+      myKeeps() {
+        return this.$store.state.allMyKeeps;
+        console.log(this.$store.state.allMyKeeps)
+      },
+      vaults() {
+        return this.$store.state.myVaults;
+        console.log(this.$store.state.myVaults)
       }
     },
     mounted() {
       this.$store.dispatch("getAllPublicKeeps")
+      this.$store.dispatch("getAllPublicKeeps")
+      this.$store.dispatch("getMyVaults")
     },
     methods: {
 
