@@ -86,7 +86,7 @@ namespace beekeepr
             return null;
         }
 
-        [HttpGet("vaultkeeps")]
+        [HttpGet("{id}/keeps")]
         public IEnumerable<Keep> GetKeepsByVaultId(string id)
         {
             var user = HttpContext.User;
