@@ -68,6 +68,35 @@ namespace beekeepr.Repositories
         SELECT * FROM vaults WHERE userId = @userId
       ", new { userId = userId });
         }
+        public VaultKeep ConnectVaultAndKeep(VaultKeep vaultKeep)
+        {
+            int id = _db.ExecuteScalar<int>(@"
+            INSERT INTO vaultkeeps (vaultId, keepId, userId)
+            VALUES (@VaultId, @KeepId, @UserId);
+            SELECT id FROM vaultkeeps
+            WHERE vaultId=@VaultId AND keepId=@KeepId AND userId=@UserId
+            ", vaultKeep);
+
+            vaultKeep.Id = id;
+            return vaultKeep;
+        }
+
+        public string DisconnectVaultAndKeep(VaultKeep vaultKeep)
+        {
+            var rowsAffected = _db.Execute(@"
+            DELETE FROM vaultkeeps
+            WHERE vaultId=@VaultId AND keepId=@KeepId AND userId=@UserId
+            ", vaultKeep);
+
+            if (rowsAffected > 0)
+            {
+                return "Disconnected keep from vault";
+            }
+            else
+            {
+                return "Disconnect keep from vault failed";
+            }
+        }
 
     }
 }

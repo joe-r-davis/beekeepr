@@ -11,9 +11,11 @@ namespace beekeepr
     public class VaultsController : Controller
     {
         private readonly VaultRepository _repo;
-        public VaultsController(VaultRepository repo)
+        private readonly KeepRepository _keepsRepo;
+        public VaultsController(VaultRepository repo, KeepRepository keepsRepo)
         {
             _repo = repo;
+            _keepsRepo = keepsRepo;
         }
 
         [HttpGet]
@@ -34,7 +36,7 @@ namespace beekeepr
             var user = HttpContext.User;
             var id = user.Identity.Name;
             return _repo.GetVaultsByUserId(id);
-        }        
+        }
 
         [HttpPost]
         public Vault AddVault([FromBody]Vault vault)
@@ -60,6 +62,36 @@ namespace beekeepr
         public string Delete(int id)
         {
             return _repo.FindByIdAndRemove(id);
+        }
+
+        [HttpPost("keeps")]
+        public VaultKeep ConnectVaultAndKeep([FromBody] VaultKeep vaultKeep)
+        {
+            return _repo.ConnectVaultAndKeep(vaultKeep);
+        }
+
+        [HttpDelete("{vaultId}/keeps/{keepId}")]
+        public string DisconnectVaultAndKeep(int vaultId, int keepId)
+        {
+            var user = HttpContext.User;
+            if (user.Identity.Name != null)
+            {
+                var sessionId = user.Identity.Name;
+                var vaultKeep = new VaultKeep();
+                vaultKeep.VaultId = vaultId;
+                vaultKeep.KeepId = keepId;
+                vaultKeep.UserId = sessionId;
+                return _repo.DisconnectVaultAndKeep(vaultKeep);
+            }
+            return null;
+        }
+
+        [HttpGet("vaultkeeps")]
+        public IEnumerable<Keep> GetKeepsByVaultId(string id)
+        {
+            var user = HttpContext.User;
+            var sessionId = user.Identity.Name;
+            return _keepsRepo.GetByVaultId(id);
         }
     }
 }
