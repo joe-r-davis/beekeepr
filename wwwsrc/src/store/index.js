@@ -28,6 +28,7 @@ export default new vuex.Store({
       message: ""
     },
     allPublicKeeps: [],
+    allMyKeeps: [],
     myVaults: [],
     userStatus: false
   },
@@ -52,6 +53,12 @@ export default new vuex.Store({
     },
     setMyVaults(state, myVaults) {
       state.myVaults = myVaults;
+    },
+    setActiveVault(state, vault) {
+      state.activeVault = vault
+    },
+    setKeepsInActiveVault(state, keeps) {
+      state.keepsInActiveVault = keeps
     }
   },
   actions: {
@@ -94,13 +101,6 @@ export default new vuex.Store({
           var newUser = res.data;
           console.log("logged-in user:", newUser);
           commit("setUser", newUser);
-
-          // Ask Randy about this one
-          // commit("setAuthError", { error: false, message: "" });
-
-          //Maybe here we commit "setActiveKeeps" and "setActiveVaults"
-          // dispatch("createProject", newUser._id);
-
           router.push({
             name: "Home"
           });
@@ -121,9 +121,6 @@ export default new vuex.Store({
           var sessionUser = res.data;
           console.log("returning user:", sessionUser);
           commit("setUser", sessionUser);
-
-          //Maybe here we commit "setActiveKeeps" and "setActiveVaults"
-          // dispatch("createProject", newUser._id);
         })
         .catch(err => {
           console.error(err);
@@ -135,12 +132,6 @@ export default new vuex.Store({
         .then(() => {
           console.log("User logged out");
           commit("setUser", {});
-
-          // Ask Randy about this one
-          // commit("setAuthError", { error: false, message: "" });
-
-          // maybe here we commit ("setActiveKeeps") and ("setActiveVaults") to empty
-
           router.push({
             name: "Welcome"
           });
@@ -199,6 +190,44 @@ export default new vuex.Store({
         });
     },
 
+    addKeepToVault({commit, dispatch}, Ids) {
+      api.post('vaults/keeps', Ids)
+      .then(res => {
+        var newVaultKeep = res.data
+        console.log('Keep now connected to Vault:', newVaultKeep)
+      })
+      .catch(err => {
+        console.log(err)
+      })
+    },
+
+    getKeepsForVault({commit, dispatch}, vault) {
+      api.get(`vaults/${vault.id}/keeps`)
+      .then(res => {
+        var keeps = res.data
+        commit("setMyVaults", myVaults)
+        commit('setActiveVault', vault)
+        commit('setKeepsInActiveVault', keeps)
+      })
+      .catch(err => {
+        console.log(err)
+      })
+    },
+
+    deleteKeepFromVault({commit, dispatch}, data) {
+      var vaultId = data.vault.id
+      var keepId = data.keep.id
+      api.delete(`vaults/${vaultId}/keeps/${keepId}`)
+      .then(res => {
+        var result = res
+        console.log(result)
+        dispatch('getKeepsForVault', data.vault)
+      })
+      .catch(err => {
+        console.log(err)
+      })
+    },
+
     updateShareCount({ commit, dispatch }, keep) {
       // console.log('Shared Project Shared',payload)
       keep.shareCount = keep.shareCount + 1;
@@ -225,6 +254,21 @@ export default new vuex.Store({
           console.log(err);
         });
     },
+    updateKeepCount({ commit, dispatch }, keep) {
+      // console.log('Shared Project Shared',payload)
+      keep.keepCount = keep.keepCount + 1;
+      // console.log('Shared Project Shared2',payload)
+      api
+        .put(`keeps/${keep.id}`, keep)
+        .then(() => {
+          dispatch("getAllPublicKeeps");
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    },
+    
+
     createKeep({ commit, dispatch }, keep) {
       api.post("/Keeps", keep).then(res => {
         dispatch("getAllPublicKeeps").catch(err => {

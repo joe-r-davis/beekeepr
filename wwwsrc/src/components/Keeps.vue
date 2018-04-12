@@ -46,9 +46,9 @@
         </div>
         <div class="col">
           <div v-if="keepToVault" @mouseleave="keepToVault = false" class="text-center keepButton mt-3">
-            <select v-model="selectedVault" @click="addToVault" class="form-control form-control-sm">
+            <select v-model="selectedVault" @click="addKeepToVault" class="form-control form-control-sm">
               <option disabled value="">select vault</option>
-              <option v-for="vault in vaults" :key="vault.id" :value="vault.id">{{vault.name}}</option>
+              <option :vault="myVault" v-for="vault in vaults" :key="vault.id" :value="vault.id">{{vault.name}}</option>
             </select>
           </div>
         </div>
@@ -72,11 +72,14 @@
       imgLink() {
         return this.keep.imageUrl
       },
+      user() {
+        return this.$store.state.user;
+      },
       vaults() {
-        return this.$store.state.allUserVaults
+        return this.$store.state.myVaults
       },
     },
-    props: ['keep', 'user'],
+    props: ['keep'],
     methods: {
       removeKeep() {
         this.$store.dispatch('deleteKeep', this.keep)
@@ -87,27 +90,29 @@
       updateViewCount() {
         this.$store.dispatch('updateViewCount', this.keep)
       },
-      addToVault() {
+      addKeepToVault() {
         console.log('Adding to vault', this.selectedVault)
 
         if (this.selectedVault === "") {
           return
         } else {
-          console.log('this is the user', this.user.id)
-          // var userId = this.user.id
-          console.log('this is the keep', this.keep.id)
-          // var keepId = (this.keep.id)
-          console.log('selecting a vault', this.selectedVault)
-          // var vaultId = (this.selectedVault)
+          console.log('User id is: ', this.keep.user.id)
+
+          console.log('Keep id is: ', this.keep.id)
+
+          console.log('Vault id is: ', this.selectedVault)
+
           var payload = {
             userId: this.user.id,
             keepId: this.keep.id,
             vaultId: this.selectedVault,
           }
-          console.log('adding to vault', payload)
-          this.$store.dispatch('addToVault', payload)
+          console.log('Adding keep to vault', payload)
+          this.$store.dispatch('addKeepToVault', payload)
+          console.log('updateKeepCount', newKeep)
+          this.$store.dispatch('updateKeepCount', newKeep)
+          this.selectedVault = ""
         }
-        this.selectedVault = ""
       }
     }
   }

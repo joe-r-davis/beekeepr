@@ -53,7 +53,7 @@
                     <div v-if="keepToVault" @mouseleave="keepToVault = false" class="text-center keepButton mt-3">
                         <select v-model="selectedVault" @click="addToVault" class="form-control form-control-sm">
                             <option disabled value="">select vault</option>
-                            <option v-for="vault in vaults" :key="vault.id" :value="vault.id">{{vault.name}}</option>
+                            <option :vault="vault" v-for="vault in vaults" :key="vault.id" :value="vault.id">{{vault.name}}</option>
                         </select>
                     </div>
                 </div>
@@ -77,11 +77,14 @@
             imgLink() {
                 return this.keep.imageUrl
             },
+            user() {
+                return this.$store.state.user;
+            },
             vaults() {
-                return this.$store.state.allUserVaults
+                return this.$store.state.myVaults
             },
         },
-        props: ['keep', 'user'],
+        props: ['keep'],
         methods: {
             removeKeep() {
                 this.$store.dispatch('deleteKeep', this.keep)
