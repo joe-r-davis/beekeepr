@@ -202,7 +202,6 @@ export default new vuex.Store({
     },
 
     getKeepsForVault({commit, dispatch}, data) {
-      debugger
       var vaultId = data.vault.id
       var keepId = data.keep.id
       api.get(`vaults/${vault.id}/keeps`)
