@@ -113,7 +113,7 @@
             vaultId: this.selectedVault,
           }
           console.log('adding to vault', payload)
-          this.$store.dispatch('addToVault', payload)
+          this.$store.dispatch('addKeepToVault', payload)
         }
         this.selectedVault = ""
       }

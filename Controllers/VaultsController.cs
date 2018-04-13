@@ -93,6 +93,25 @@ namespace beekeepr
             var sessionId = user.Identity.Name;
             return _keepsRepo.GetByVaultId(id);
         }
+
+        [HttpGet("keeps/byVault")]
+        public AllKeepsResults GetAllKeepsByVault()
+        {
+            IEnumerable<Vault> allVaults = Get();
+            List<int> vaultIds = new List<int>();
+            foreach (Vault vault in allVaults)
+            {
+                vaultIds.Add(vault.Id);
+            }
+
+            AllKeepsResults results = new AllKeepsResults();
+            foreach (int vaultId in vaultIds)
+            {
+                // fire _keepsRepo.GetByVaultId(vaultId)
+                // add to results... vaultId: return value from prev line
+            }
+            return results;
+        }
     }
 }
 

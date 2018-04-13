@@ -118,7 +118,11 @@
       vaults() {
         return this.$store.state.myVaults;
         console.log(this.$store.state.myVaults)
-      }
+      },
+      // keepsByVaultId () {
+      //   return this.$store.state.state.keepsByVaultId;
+      //   console.log(this.$store.state.keepsByVaultId)
+      // }
     },
     mounted() {
       this.$store.dispatch("getAllMyKeeps")
@@ -137,7 +141,6 @@
         this.$store.dispatch('createKeep', this.newKeep)
       },
       addVault() {
-        debugger
         this.newVault = {
           name: this.vault.name,
           description: this.vault.description,

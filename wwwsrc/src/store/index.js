@@ -57,8 +57,8 @@ export default new vuex.Store({
     setActiveVault(state, vault) {
       state.activeVault = vault
     },
-    setKeepsInActiveVault(state, keeps) {
-      state.keepsInActiveVault = keeps
+    setVaultKeeps(state, vaultKeeps) {
+      state.vaultKeeps = vaultKeeps
     }
   },
   actions: {
@@ -201,13 +201,16 @@ export default new vuex.Store({
       })
     },
 
-    getKeepsForVault({commit, dispatch}, vault) {
+    getKeepsForVault({commit, dispatch}, data) {
+      debugger
+      var vaultId = data.vault.id
+      var keepId = data.keep.id
       api.get(`vaults/${vault.id}/keeps`)
       .then(res => {
-        var keeps = res.data
+        var result = res
+        console.log(result)
         commit("setMyVaults", myVaults)
-        commit('setActiveVault', vault)
-        commit('setKeepsInActiveVault', keeps)
+        commit('setVaultKeeps', keeps)
       })
       .catch(err => {
         console.log(err)
